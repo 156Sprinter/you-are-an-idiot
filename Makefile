@@ -25,7 +25,7 @@ APP_DESCRIPTION     :=	You are an idiot!
 APP_AUTHOR          :=	HIDE
 VERSION_MAJOR       :=  1
 VERSION_MINOR       :=  0
-VERSION_MICRO       :=  0
+VERSION_MICRO       :=  1
 UNIQUE_ID           :=	0x32312
 PRODUCT_CODE        :=	CTR-AN-IDIOT
 
@@ -58,7 +58,7 @@ LDFLAGS	=	-specs=3dsx.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
 LIBS	:= -lm3dia -lcitro2d -lcitro3d -lctru -lmpg123
 
-LIBDIRS	:= $(CTRULIB)
+LIBDIRS	:= $(PORTLIBS) $(CTRULIB)
 
 ifneq ($(BUILD),$(notdir $(CURDIR)))
 
@@ -152,7 +152,7 @@ endif
 .PHONY: all clean
 
 #---------------------------------------------------------------------------------
-MAKEROM      := tools/makerom.exe
+MAKEROM      := makerom
 MAKEROM_ARGS := -elf "$(OUTPUT).elf" -rsf "$(RSF_PATH)" -banner "$(BUILD)/banner.bnr" -icon "$(BUILD)/icon.icn" -DAPP_TITLE="$(APP_TITLE)" -DAPP_PRODUCT_CODE="$(PRODUCT_CODE)" -DAPP_UNIQUE_ID="$(UNIQUE_ID)"
 MAKEROM_ARGS += -major "$(VERSION_MAJOR)" -minor "$(VERSION_MINOR)" -micro "$(VERSION_MICRO)"
 
@@ -163,7 +163,7 @@ ifneq ($(strip $(ROMFS)),)
 	MAKEROM_ARGS	+=	 -DAPP_ROMFS="$(ROMFS)"
 endif
 
-BANNERTOOL   := tools/bannertool.exe
+BANNERTOOL   := bannertool
 
 ifeq ($(suffix $(BANNER_IMAGE)),.cgfx)
 	BANNER_IMAGE_ARG := -ci
@@ -190,7 +190,6 @@ all: $(BUILD) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
 	@echo built ... $(TARGET).cia
 	@rm $(TARGET).elf $(TARGET).smdh
 	@mv $(TARGET).3ds $(TARGET).cia ./$(APP)
-	@echo Finished! Your application have been built!
 
 $(BUILD):
 	@mkdir -p $@
@@ -207,9 +206,7 @@ endif
 
 #---------------------------------------------------------------------------------
 clean:
-	@echo Clean ...
 	@rm -fr $(BUILD) $(TARGET).3dsx $(OUTPUT).smdh $(TARGET).elf $(TARGET).cia $(APP)
-	@echo Finished! Your application have been erased!
 
 #---------------------------------------------------------------------------------
 $(GFXBUILD)/%.t3x	$(BUILD)/%.h	:	%.t3s

@@ -1,4 +1,4 @@
-#include "m3d/graphics/drawables/sprite.hpp"
+#include <m3d/graphics/drawables/sprite.hpp>
 
 namespace m3d {
 

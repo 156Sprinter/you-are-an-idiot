@@ -1,10 +1,10 @@
 #include <3ds.h>
 #include <citro3d.h>
 #include <cstring>
-#include "m3d/core/applet.hpp"
-#include "m3d/core/ledPattern.hpp"
-#include "m3d/private/core.hpp"
-#include "m3d/private/ndsp.hpp"
+#include <m3d/core/applet.hpp>
+#include <m3d/core/ledPattern.hpp>
+#include <m3d/private/core.hpp>
+#include <m3d/private/ndsp.hpp>
 
 namespace m3d {
     Applet::Applet() :

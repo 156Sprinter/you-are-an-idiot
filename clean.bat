@@ -1,5 +1,5 @@
 @echo off
-cls
+echo Clean...
 make clean
 echo.
 echo Press any key...
