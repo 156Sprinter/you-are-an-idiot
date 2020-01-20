@@ -12,7 +12,7 @@ BUILD		:=	build
 SOURCES		:=	source
 DATA		:=	data
 INCLUDES	:=	include
-GRAPHICS	:=	asset
+GRAPHICS	:=	resource
 ROMFS		:=	romfs
 GFXBUILD	:=	$(ROMFS)
 
