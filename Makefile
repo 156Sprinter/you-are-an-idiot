@@ -12,10 +12,9 @@ BUILD		:=	build
 SOURCES		:=	source
 DATA		:=	data
 INCLUDES	:=	include
-GRAPHICS	:=	assets
+GRAPHICS	:=	asset
 ROMFS		:=	romfs
 GFXBUILD	:=	$(ROMFS)
-APP         :=  app
 
 #---------------------------------------------------------------------------------
 #Information
@@ -58,7 +57,7 @@ LDFLAGS	=	-specs=3dsx.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
 LIBS	:= -lm3dia -lcitro2d -lcitro3d -lctru -lmpg123
 
-LIBDIRS	:= $(PORTLIBS) $(CTRULIB)
+LIBDIRS	:= $(PORTLIBS) $(CTRULIB) $(TOPDIR)
 
 ifneq ($(BUILD),$(notdir $(CURDIR)))
 
@@ -180,16 +179,9 @@ endif
 #---------------------------------------------------------------------------------
 all: $(BUILD) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
 	@$(MAKE) -j -s --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
-	@mkdir -p $(APP)
-	@mv $(TARGET).3dsx ./$(APP)
 	@$(BANNERTOOL) makebanner $(BANNER_IMAGE_ARG) "$(BANNER_IMAGE)" $(BANNER_AUDIO_ARG) "$(BANNER_AUDIO)" -o "$(BUILD)/banner.bnr"
 	@$(BANNERTOOL) makesmdh -s "$(APP_TITLE)" -l "$(APP_DESCRIPTION)" -p "$(APP_AUTHOR)" -i "$(APP_ICON)" -f "$(ICON_FLAGS)" -o "$(BUILD)/icon.icn"
-	@$(MAKEROM) -f cci -o "$(OUTPUT).3ds" -target t -exefslogo $(MAKEROM_ARGS)
-	@echo built ... $(TARGET).3ds
 	@$(MAKEROM) -f cia -o "$(OUTPUT).cia" -target t -exefslogo $(MAKEROM_ARGS)
-	@echo built ... $(TARGET).cia
-	@rm $(TARGET).elf $(TARGET).smdh
-	@mv $(TARGET).3ds $(TARGET).cia ./$(APP)
 
 $(BUILD):
 	@mkdir -p $@
@@ -206,7 +198,7 @@ endif
 
 #---------------------------------------------------------------------------------
 clean:
-	@rm -fr $(BUILD) $(TARGET).3dsx $(OUTPUT).smdh $(TARGET).elf $(TARGET).cia $(APP)
+	@rm -fr $(BUILD) $(TARGET).3dsx $(OUTPUT).smdh $(TARGET).elf $(TARGET).cia
 
 #---------------------------------------------------------------------------------
 $(GFXBUILD)/%.t3x	$(BUILD)/%.h	:	%.t3s
