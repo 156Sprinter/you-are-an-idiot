@@ -1,6 +1,1 @@
-@echo off
-echo Clean...
-make clean
-echo.
-echo Press any key...
-pause >nul
+@make clean
